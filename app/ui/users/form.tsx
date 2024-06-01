@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { DefaultValues, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 const formSchema = z.object({
@@ -31,13 +31,13 @@ const formSchema = z.object({
     .nullable(),
 });
 
-const UserForm = ({
-  onSubmit,
-  defaultValues,
-}: {
+export type UserFormProps = {
   onSubmit: (data: UserData) => void;
-  defaultValues?: UserData;
-}) => {
+  defaultValues?: DefaultValues<UserData>;
+  isReadOnly?: boolean;
+};
+
+const UserForm = ({ onSubmit, defaultValues, isReadOnly }: UserFormProps) => {
   const form = useForm<UserData>({
     resolver: zodResolver(formSchema),
     defaultValues,
@@ -57,7 +57,7 @@ const UserForm = ({
             <FormItem>
               <FormLabel>Username</FormLabel>
               <FormControl>
-                <Input placeholder='Username' {...field} />
+                <Input readOnly={isReadOnly} placeholder='Username' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -70,7 +70,7 @@ const UserForm = ({
             <FormItem>
               <FormLabel>Full Name</FormLabel>
               <FormControl>
-                <Input placeholder='Full Name' {...field} />
+                <Input readOnly={isReadOnly} placeholder='Full Name' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -83,7 +83,7 @@ const UserForm = ({
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder='Email' {...field} />
+                <Input readOnly={isReadOnly} placeholder='Email' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -96,7 +96,7 @@ const UserForm = ({
             <FormItem>
               <FormLabel>Phone Number</FormLabel>
               <FormControl>
-                <Input placeholder='Phone Number' {...field} />
+                <Input readOnly={isReadOnly} placeholder='Phone Number' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -1,6 +1,6 @@
 'use client';
-import { UserData } from '@/app/lib/type';
-import UserForm from '@/app/ui/users/form';
+
+import UserForm, { UserFormProps } from '@/app/ui/users/form';
 import { Button } from '@/components/ui/button';
 import {
   DialogContent,
@@ -10,17 +10,18 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 
-type CustomDialogProps = {
+type DialogContentUserProps = {
   title: string;
   description: string;
-  onSubmit: (data: UserData) => void;
-};
+} & UserFormProps;
 
 export default function DialogContentUser({
   title,
   description,
   onSubmit,
-}: CustomDialogProps) {
+  defaultValues,
+  isReadOnly,
+}: DialogContentUserProps) {
   return (
     <DialogContent className='sm:max-w-[425px]'>
       <DialogHeader>
@@ -28,20 +29,17 @@ export default function DialogContentUser({
         <DialogDescription>{description}</DialogDescription>
       </DialogHeader>
       <div className='grid gap-4 py-4'>
-        <UserForm onSubmit={onSubmit} />
+        <UserForm
+          onSubmit={onSubmit}
+          defaultValues={defaultValues}
+          isReadOnly={isReadOnly}
+        />
       </div>
       <DialogFooter>
         <Button type='submit' form='user-form'>
-          Save changes
+          {isReadOnly ? 'Close' : 'Save'}
         </Button>
       </DialogFooter>
     </DialogContent>
   );
 }
-
-// <>
-//   <DialogTrigger asChild>
-//     <Button>Add user</Button>
-//   </DialogTrigger>
-
-// </>
