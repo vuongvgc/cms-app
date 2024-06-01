@@ -1,5 +1,5 @@
 import NavLinks from '@/app/ui/dashboard/nav-links';
-import Logo from '@/app/ui/Logo';
+import Logo from '@/app/ui/logo';
 export default function SideNav() {
   return (
     <div className='flex flex-col gap-2'>

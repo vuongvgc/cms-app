@@ -1,3 +1,4 @@
+'use client';
 import { UserData } from '@/app/lib/type';
 import { Button } from '@/components/ui/button';
 import {
