@@ -4,16 +4,25 @@ import DialogContentUser from '@/app/ui/users/dialog-content';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { PlusIcon } from 'lucide-react';
+import { useState } from 'react';
 
 export default function DialogCreateForm() {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const handleCreateUser = (data: UserData) => {
     console.log('Form Data:', data);
+    setTimeout(() => {
+      setIsOpen(false);
+    }, 3000);
   };
 
   return (
-    <Dialog>
+    <Dialog open={isOpen}>
       <DialogTrigger asChild>
-        <Button variant='outline' className='flex justify-center items-center gap-2'>
+        <Button
+          onClick={() => setIsOpen(true)}
+          variant='outline'
+          className='flex justify-center items-center gap-2'
+        >
           <PlusIcon className='h-4 w-4' />
           Add
         </Button>

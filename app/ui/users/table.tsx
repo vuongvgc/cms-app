@@ -26,19 +26,23 @@ const users: UserData[] = [
     userName: 'olivia.martin',
     fullName: 'Olivia Martin',
     email: 'olivia.martin@example.com',
-    phoneNumber: '555-1234',
+    phoneNumber: '5552221234',
   },
   {
     userName: 'ava.johnson',
     fullName: 'Ava Johnson',
     email: 'ava.johnson@example.com',
-    phoneNumber: '555-5678',
+    phoneNumber: '5552225678',
   },
 ];
 
 export default function UsersTable() {
   const handleUpdateUser = (user: UserData) => {
     console.log('user', user);
+
+    setTimeout(() => {
+      setDialogState({ type: null, isOpen: false, defaultValues: undefined });
+    }, 3000);
   };
 
   const [dialogState, setDialogState] = useState<{
@@ -112,7 +116,9 @@ export default function UsersTable() {
                 : 'Update the user details.'
             }
             isReadOnly={dialogState.type === 'view'}
-            onSubmit={dialogState.type === 'update' ? handleUpdateUser : () => {}}
+            onSubmit={
+              dialogState.type === 'update' ? handleUpdateUser : handleDialogClose
+            }
             defaultValues={dialogState.defaultValues}
           />
         </Dialog>

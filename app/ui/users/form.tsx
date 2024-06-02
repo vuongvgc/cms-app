@@ -23,12 +23,6 @@ const formSchema = z.object({
   phoneNumber: z
     .string()
     .regex(/^[0-9]{10}$/, { message: 'Phone number must be 10 digits.' }),
-  iceCreamType: z
-    .object({
-      label: z.string(),
-      value: z.string(),
-    })
-    .nullable(),
 });
 
 export type UserFormProps = {
@@ -37,10 +31,18 @@ export type UserFormProps = {
   isReadOnly?: boolean;
 };
 
+const userDefaultValues: DefaultValues<UserData> = {
+  fullName: '',
+  email: '',
+  phoneNumber: '',
+  userName: '',
+};
+
 const UserForm = ({ onSubmit, defaultValues, isReadOnly }: UserFormProps) => {
   const form = useForm<UserData>({
     resolver: zodResolver(formSchema),
-    defaultValues,
+    mode: 'onChange',
+    defaultValues: defaultValues || userDefaultValues,
   });
 
   return (

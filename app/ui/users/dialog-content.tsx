@@ -3,6 +3,7 @@
 import UserForm, { UserFormProps } from '@/app/ui/users/form';
 import { Button } from '@/components/ui/button';
 import {
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -36,6 +37,13 @@ export default function DialogContentUser({
         />
       </div>
       <DialogFooter>
+        {isReadOnly ? null : (
+          <DialogClose asChild>
+            <Button type='button' variant='secondary'>
+              Cancel
+            </Button>
+          </DialogClose>
+        )}
         <Button type='submit' form='user-form'>
           {isReadOnly ? 'Close' : 'Save'}
         </Button>
