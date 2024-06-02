@@ -13,3 +13,13 @@ export type OrderData = {
   status: string;
   total: string;
 };
+
+export interface LoginFormData {
+  email: string;
+  password: string;
+}
+
+export const initValues: LoginFormData = {
+  email: 'admin@quickflow.com',
+  password: '123456',
+};

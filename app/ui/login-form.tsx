@@ -1,3 +1,4 @@
+'use client';
 import {
   Card,
   CardHeader,
@@ -8,8 +9,14 @@ import {
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { useFormState, useFormStatus } from 'react-dom';
+import { authenticate } from '@/app/lib/actions';
+import { OctagonAlertIcon } from 'lucide-react';
 
 export default function LoginForm() {
+  const [errorMessage, dispatch] = useFormState(authenticate, undefined);
+  const { pending } = useFormStatus();
+
   return (
     <Card className='mx-auto max-w-sm'>
       <CardHeader className='space-y-1'>
@@ -19,19 +26,39 @@ export default function LoginForm() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className='space-y-4'>
-          <div className='space-y-2'>
-            <Label htmlFor='email'>Email</Label>
-            <Input id='email' type='email' placeholder='m@example.com' required />
+        <form action={dispatch} className='space-y-3'>
+          <div className='space-y-4'>
+            <div className='space-y-2'>
+              <Label htmlFor='email'>Email</Label>
+              <Input id='email' type='email' placeholder='m@example.com' required />
+            </div>
+            <div className='space-y-2'>
+              <Label htmlFor='password'>Password</Label>
+              <Input
+                id='password'
+                type='password'
+                placeholder='Enter password'
+                minLength={6}
+                required
+              />
+            </div>
+            <Button type='submit' className='w-full' disabled={pending}>
+              Login
+            </Button>
+            <div
+              className='flex h-8 items-end space-x-1'
+              aria-live='polite'
+              aria-atomic='true'
+            >
+              {errorMessage && (
+                <>
+                  <OctagonAlertIcon className='h-5 w-5 text-red-500' />
+                  <p className='text-sm text-red-500'>{errorMessage}</p>
+                </>
+              )}
+            </div>
           </div>
-          <div className='space-y-2'>
-            <Label htmlFor='password'>Password</Label>
-            <Input id='password' type='password' required />
-          </div>
-          <Button type='submit' className='w-full'>
-            Login
-          </Button>
-        </div>
+        </form>
       </CardContent>
     </Card>
   );

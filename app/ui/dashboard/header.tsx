@@ -1,5 +1,5 @@
 import { AvatarAdmin } from '@/app/ui/avatar';
-import { Avatar } from '@/components/ui/avatar';
+import { signOut } from '@/auth';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -11,7 +11,6 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import { Package2Icon, SearchIcon } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
 export default function Header() {
   return (
@@ -46,7 +45,16 @@ export default function Header() {
             <DropdownMenuSeparator />
             <DropdownMenuItem>Profile</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Logout</DropdownMenuItem>
+            <DropdownMenuItem>
+              <form
+                action={async () => {
+                  'use server';
+                  await signOut();
+                }}
+              >
+                <button>Logout</button>
+              </form>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
