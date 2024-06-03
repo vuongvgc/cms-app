@@ -8,7 +8,7 @@ export async function fetchFilteredOrders(query: string) {
     const data = await sql<OrderType>`
       SELECT
         Id,
-        order_no,
+        order_no AS "orderNo",
         "user",
         channel,
         date,
@@ -23,7 +23,7 @@ export async function fetchFilteredOrders(query: string) {
       ORDER BY date DESC
     `;
 
-    return data.rows;
+    return data.rows || [];
   } catch (err) {
     console.error('Database Error:', err);
   }

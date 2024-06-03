@@ -1,4 +1,5 @@
 import { AvatarAdmin } from '@/app/ui/avatar';
+import Search from '@/app/ui/search';
 import { signOut } from '@/auth';
 import { Button } from '@/components/ui/button';
 import {
@@ -9,8 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Input } from '@/components/ui/input';
-import { Package2Icon, SearchIcon } from 'lucide-react';
+import { Package2Icon } from 'lucide-react';
 import Link from 'next/link';
 export default function Header() {
   return (
@@ -23,16 +23,9 @@ export default function Header() {
         <h1 className='font-semibold text-lg'>Recent Items</h1>
       </div>
       <div className='flex flex-1 items-center gap-4 md:ml-auto md:gap-2 lg:gap-4'>
-        <form className='ml-auto flex-1 sm:flex-initial'>
-          <div className='relative'>
-            <SearchIcon className='absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400' />
-            <Input
-              type='search'
-              placeholder='Search ...'
-              className='pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px] bg-white'
-            />
-          </div>
-        </form>
+        <div className='ml-auto flex-1 sm:flex-initial'>
+          <Search placeholder='Search...' />
+        </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant='ghost' size='icon' className='rounded-full'>
