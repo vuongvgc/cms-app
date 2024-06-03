@@ -30,13 +30,20 @@ export default function LoginForm() {
           <div className='space-y-4'>
             <div className='space-y-2'>
               <Label htmlFor='email'>Email</Label>
-              <Input id='email' type='email' placeholder='m@example.com' required />
+              <Input
+                id='email'
+                type='email'
+                name='email'
+                placeholder='m@example.com'
+                required
+              />
             </div>
             <div className='space-y-2'>
               <Label htmlFor='password'>Password</Label>
               <Input
                 id='password'
                 type='password'
+                name='password'
                 placeholder='Enter password'
                 minLength={6}
                 required

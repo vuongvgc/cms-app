@@ -7,16 +7,17 @@ export async function fetchFilteredOrders(query: string) {
   try {
     const data = await sql<OrderType>`
       SELECT
-        order,
-        user,
+        Id,
+        order_no,
+        "user",
         channel,
         date,
         total,
         status
       FROM orders
       WHERE
-        order ILIKE ${'%' + query + '%'} OR
-        user ILIKE ${'%' + query + '%'} OR
+        order_no ILIKE ${'%' + query + '%'} OR
+        "user" ILIKE ${'%' + query + '%'} OR
         channel ILIKE ${'%' + query + '%'} OR
         status ILIKE ${'%' + query + '%'}
       ORDER BY date DESC
@@ -25,7 +26,6 @@ export async function fetchFilteredOrders(query: string) {
     return data.rows;
   } catch (err) {
     console.error('Database Error:', err);
-    throw new Error('Failed to fetch orders.');
   }
 }
 
@@ -35,7 +35,6 @@ export async function getUser(email: string) {
     return user.rows[0] as UserType;
   } catch (error) {
     console.error('Failed to fetch user:', error);
-    throw new Error('Failed to fetch user.');
   }
 }
 
@@ -58,6 +57,5 @@ export async function fetchFilteredUsers(query: string) {
     return data.rows;
   } catch (err) {
     console.error('Database Error:', err);
-    throw new Error('Failed to fetch users.');
   }
 }

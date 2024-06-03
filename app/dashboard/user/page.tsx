@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: 'Users',
 };
 
-import { fetchFilteredOrders, fetchFilteredUsers } from '@/app/lib/data';
+import { fetchFilteredUsers } from '@/app/lib/data';
 import { Suspense } from 'react';
 
 export default async function Page({
@@ -27,7 +27,7 @@ export default async function Page({
           <DialogCreateForm />
         </div>
         <Suspense fallback={<></>}>
-          <UsersTable users={users} />
+          <UsersTable users={users || []} />
         </Suspense>
       </div>
     </main>

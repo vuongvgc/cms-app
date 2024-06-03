@@ -16,9 +16,7 @@ export default async function UsersTable({ users }: { users: UserType[] }) {
         <TableHeader>
           <TableRow>
             <TableHead className='min-w-[150px]'>User Name</TableHead>
-            <TableHead className='min-w-[150px]'>Full Name</TableHead>
             <TableHead className='min-w-[200px]'>Email</TableHead>
-            <TableHead className='min-w-[150px]'>Phone Number</TableHead>
             <TableHead className='text-right'>Actions</TableHead>
           </TableRow>
         </TableHeader>

@@ -22,7 +22,7 @@ export default async function Page({
   return (
     <main>
       <Suspense fallback={<></>}>
-        <OrderTable orders={orders} />
+        <OrderTable orders={orders || []} />
       </Suspense>
     </main>
   );

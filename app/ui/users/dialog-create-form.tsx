@@ -16,7 +16,7 @@ export default function DialogCreateForm() {
   };
 
   return (
-    <Dialog open={isOpen}>
+    <Dialog open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
       <DialogTrigger asChild>
         <Button
           onClick={() => setIsOpen(true)}
