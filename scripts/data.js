@@ -9,7 +9,8 @@ const users = [
 
 const orders = [
   {
-    order: '#3210',
+    id: '3958dc9e-712f-4377-85e9-fec4b6a6442a',
+    orderNo: '#3210',
     user: 'Olivia Martin',
     channel: 'Online Store',
     date: 'February 20, 2022',
@@ -17,7 +18,8 @@ const orders = [
     status: 'Shipped',
   },
   {
-    order: '#3209',
+    id: '3958dc9e-737f-4377-85e9-fec4b6a6442a',
+    orderNo: '#3209',
     user: 'Ava Johnson',
     channel: 'Shop',
     date: 'January 5, 2022',

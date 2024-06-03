@@ -7,19 +7,19 @@ export async function fetchFilteredOrders(query: string) {
   try {
     const data = await sql<OrderType>`
       SELECT
-        order_id,
-        user_name,
+        order,
+        user,
         channel,
-        order_date,
+        date,
         total,
         status
       FROM orders
       WHERE
-        order_id ILIKE ${'%' + query + '%'} OR
-        user_name ILIKE ${'%' + query + '%'} OR
+        order ILIKE ${'%' + query + '%'} OR
+        user ILIKE ${'%' + query + '%'} OR
         channel ILIKE ${'%' + query + '%'} OR
         status ILIKE ${'%' + query + '%'}
-      ORDER BY order_date DESC
+      ORDER BY date DESC
     `;
 
     return data.rows;

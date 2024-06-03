@@ -1,5 +1,6 @@
 export type OrderType = {
-  order: string;
+  id: string;
+  orderNo: string;
   user: string;
   channel: string;
   date: string;

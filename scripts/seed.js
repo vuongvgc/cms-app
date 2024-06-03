@@ -49,10 +49,10 @@ async function seedOrders(client) {
     const createTable = await client.sql`
       CREATE TABLE IF NOT EXISTS orders (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-        order_id VARCHAR(255) NOT NULL,
-        user_name VARCHAR(255) NOT NULL,
+        order_no VARCHAR(255) NOT NULL,
+        "user" VARCHAR(255) NOT NULL,
         channel VARCHAR(255) NOT NULL,
-        order_date DATE NOT NULL,
+        date DATE NOT NULL,
         total DECIMAL(10, 2) NOT NULL,
         status VARCHAR(255) NOT NULL
       );
@@ -60,15 +60,16 @@ async function seedOrders(client) {
 
     console.log(`Created "orders" table`);
 
-    // Insert data into the "orders" table
     const insertedOrders = await Promise.all(
       orders.map(
         (order) => client.sql`
-        INSERT INTO orders (order_id, user_name, channel, order_date, total, status)
-        VALUES (${order.order}, ${order.user}, ${order.channel}, ${new Date(
-          order.date
-        )}, ${parseFloat(order.total.replace('$', ''))}, ${order.status})
-        ON CONFLICT (order_id) DO NOTHING;
+        INSERT INTO orders (id, order_no, "user", channel, date, total, status)
+        VALUES (${order.id}, ${order.orderNo}, ${order.user}, ${
+          order.channel
+        }, ${new Date(order.date)}, ${parseFloat(order.total.replace('$', ''))}, ${
+          order.status
+        })
+        ON CONFLICT (id) DO NOTHING;
       `
       )
     );

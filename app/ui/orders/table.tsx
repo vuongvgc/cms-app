@@ -33,8 +33,8 @@ export default async function OrderTable({ orders }: { orders: OrderType[] }) {
         </TableHeader>
         <TableBody>
           {orders.map((order) => (
-            <TableRow key={order.order}>
-              <TableCell className='font-medium'>{order.order}</TableCell>
+            <TableRow key={order.id}>
+              <TableCell className='font-medium'>{order.orderNo}</TableCell>
               <TableCell>{order.user}</TableCell>
               <TableCell className='hidden md:table-cell'>{order.channel}</TableCell>
               <TableCell className='hidden md:table-cell'>{order.date}</TableCell>
