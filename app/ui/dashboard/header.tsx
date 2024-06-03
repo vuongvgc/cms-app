@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Package2Icon } from 'lucide-react';
 import Link from 'next/link';
+import { Suspense } from 'react';
 export default function Header() {
   return (
     <header className='flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40'>
@@ -24,7 +25,9 @@ export default function Header() {
       </div>
       <div className='flex flex-1 items-center gap-4 md:ml-auto md:gap-2 lg:gap-4'>
         <div className='ml-auto flex-1 sm:flex-initial'>
-          <Search placeholder='Search...' />
+          <Suspense>
+            <Search placeholder='Search...' />
+          </Suspense>
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
