@@ -1,6 +1,6 @@
 'use client';
 
-import { UserData } from '@/app/lib/type';
+import { UserType } from '@/app/lib/type';
 import {
   Form,
   FormControl,
@@ -26,20 +26,18 @@ const formSchema = z.object({
 });
 
 export type UserFormProps = {
-  onSubmit: (data: UserData) => void;
-  defaultValues?: DefaultValues<UserData>;
+  onSubmit: (data: UserType) => void;
+  defaultValues?: DefaultValues<UserType>;
   isReadOnly?: boolean;
 };
 
-const userDefaultValues: DefaultValues<UserData> = {
-  fullName: '',
+const userDefaultValues: DefaultValues<UserType> = {
+  name: '',
   email: '',
-  phoneNumber: '',
-  userName: '',
 };
 
 const UserForm = ({ onSubmit, defaultValues, isReadOnly }: UserFormProps) => {
-  const form = useForm<UserData>({
+  const form = useForm<UserType>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: defaultValues || userDefaultValues,
@@ -54,7 +52,7 @@ const UserForm = ({ onSubmit, defaultValues, isReadOnly }: UserFormProps) => {
       >
         <FormField
           control={form.control}
-          name='userName'
+          name='name'
           render={({ field }) => (
             <FormItem>
               <FormLabel>Username</FormLabel>
@@ -65,19 +63,7 @@ const UserForm = ({ onSubmit, defaultValues, isReadOnly }: UserFormProps) => {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name='fullName'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Full Name</FormLabel>
-              <FormControl>
-                <Input readOnly={isReadOnly} placeholder='Full Name' {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+
         <FormField
           control={form.control}
           name='email'
@@ -86,19 +72,6 @@ const UserForm = ({ onSubmit, defaultValues, isReadOnly }: UserFormProps) => {
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input readOnly={isReadOnly} placeholder='Email' {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name='phoneNumber'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Phone Number</FormLabel>
-              <FormControl>
-                <Input readOnly={isReadOnly} placeholder='Phone Number' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

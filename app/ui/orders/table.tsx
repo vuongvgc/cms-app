@@ -1,4 +1,4 @@
-import { OrderData } from '@/app/lib/type';
+import { OrderType } from '@/app/lib/type';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -16,27 +16,7 @@ import {
 } from '@/components/ui/table';
 import { MoveHorizontalIcon } from 'lucide-react';
 
-const orders: OrderData[] = [
-  {
-    order: '#3210',
-    user: 'Olivia Martin',
-    channel: 'Online Store',
-    date: 'February 20, 2022',
-    total: '$42.25',
-    status: 'Shipped',
-  },
-  {
-    order: '#3209',
-    user: 'Ava Johnson',
-    channel: 'Shop',
-    date: 'January 5, 2022',
-    total: '$74.99',
-    status: 'Paid',
-  },
-  // Add more orders here...
-];
-
-export default function OrderTable() {
+export default async function OrderTable({ orders }: { orders: OrderType[] }) {
   return (
     <div className='border shadow-sm rounded-lg p-2'>
       <Table>

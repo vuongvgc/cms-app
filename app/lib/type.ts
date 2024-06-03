@@ -1,11 +1,4 @@
-export type UserData = {
-  userName: string;
-  fullName: string;
-  email: string;
-  phoneNumber: string;
-};
-
-export type OrderData = {
+export type OrderType = {
   order: string;
   user: string;
   channel: string;
@@ -22,4 +15,11 @@ export interface LoginFormData {
 export const initValues: LoginFormData = {
   email: 'admin@quickflow.com',
   password: '123456',
+};
+
+export type UserType = {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
 };

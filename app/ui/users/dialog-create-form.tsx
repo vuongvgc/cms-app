@@ -1,5 +1,5 @@
 'use client';
-import { UserData } from '@/app/lib/type';
+import { UserType } from '@/app/lib/type';
 import DialogContentUser from '@/app/ui/users/dialog-content';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
@@ -8,7 +8,7 @@ import { useState } from 'react';
 
 export default function DialogCreateForm() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const handleCreateUser = (data: UserData) => {
+  const handleCreateUser = (data: UserType) => {
     console.log('Form Data:', data);
     setTimeout(() => {
       setIsOpen(false);
