@@ -41,7 +41,7 @@ export default function ActionTable({ user }: { user: UserType }) {
   };
 
   return (
-    <div className='border shadow-sm rounded-lg p-2'>
+    <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant='ghost' size='icon'>
@@ -75,6 +75,6 @@ export default function ActionTable({ user }: { user: UserType }) {
           />
         </Dialog>
       )}
-    </div>
+    </>
   );
 }

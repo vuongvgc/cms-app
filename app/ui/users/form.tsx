@@ -15,14 +15,8 @@ import { DefaultValues, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 const formSchema = z.object({
-  userName: z
-    .string()
-    .min(2, { message: 'Username must be at least 2 characters.' }),
-  fullName: z.string().min(1, { message: 'Full name is required.' }),
+  name: z.string().min(2, { message: 'Username must be at least 2 characters.' }),
   email: z.string().email({ message: 'Invalid email format.' }),
-  phoneNumber: z
-    .string()
-    .regex(/^[0-9]{10}$/, { message: 'Phone number must be 10 digits.' }),
 });
 
 export type UserFormProps = {
@@ -55,9 +49,9 @@ const UserForm = ({ onSubmit, defaultValues, isReadOnly }: UserFormProps) => {
           name='name'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input readOnly={isReadOnly} placeholder='Username' {...field} />
+                <Input readOnly={isReadOnly} placeholder='Name' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
