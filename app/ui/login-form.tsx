@@ -1,17 +1,17 @@
 'use client';
+import { authenticate } from '@/app/lib/actions';
+import FormErrorMessage from '@/app/ui/FormErrorMessage';
+import { Button } from '@/components/ui/button';
 import {
   Card,
+  CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
-  CardContent,
 } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
 import { useFormState, useFormStatus } from 'react-dom';
-import { authenticate } from '@/app/lib/actions';
-import { OctagonAlertIcon } from 'lucide-react';
 
 export default function LoginForm() {
   const [errorMessage, dispatch] = useFormState(authenticate, undefined);
@@ -52,18 +52,7 @@ export default function LoginForm() {
             <Button type='submit' className='w-full' disabled={pending}>
               Login
             </Button>
-            <div
-              className='flex h-8 items-end space-x-1'
-              aria-live='polite'
-              aria-atomic='true'
-            >
-              {errorMessage && (
-                <>
-                  <OctagonAlertIcon className='h-5 w-5 text-red-500' />
-                  <p className='text-sm text-red-500'>{errorMessage}</p>
-                </>
-              )}
-            </div>
+            <FormErrorMessage errorMessage={errorMessage || ''} />
           </div>
         </form>
       </CardContent>

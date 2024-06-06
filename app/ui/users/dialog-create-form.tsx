@@ -1,19 +1,16 @@
 'use client';
-import { UserType } from '@/app/lib/type';
+import { createUser } from '@/app/lib/actions';
 import DialogContentUser from '@/app/ui/users/dialog-content';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { PlusIcon } from 'lucide-react';
 import { useState } from 'react';
+import { useFormState, useFormStatus } from 'react-dom';
 
 export default function DialogCreateForm() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const handleCreateUser = (data: UserType) => {
-    console.log('Form Data:', data);
-    setTimeout(() => {
-      setIsOpen(false);
-    }, 3000);
-  };
+
+  const [errorMessage, dispatch] = useFormState(createUser, undefined);
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
@@ -30,7 +27,7 @@ export default function DialogCreateForm() {
       <DialogContentUser
         title='Create User'
         description='Fill in the details to create a new user.'
-        onSubmit={handleCreateUser}
+        onSubmit={dispatch}
       />
     </Dialog>
   );
