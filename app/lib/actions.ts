@@ -1,10 +1,12 @@
 'use server';
 import { UserType } from '@/app/lib/type';
+import { generateHashedPassword } from '@/app/lib/utils';
 import { isEmailExits } from '@/app/lib/validation';
 import { signIn } from '@/auth';
 import { sql } from '@vercel/postgres';
-import bcrypt from 'bcrypt';
-import { AuthError } from 'next-auth';
+import { AuthError, User } from 'next-auth';
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 import * as z from 'zod';
 
 export async function authenticate(_: string | undefined, formData: FormData) {
@@ -26,6 +28,7 @@ export async function authenticate(_: string | undefined, formData: FormData) {
 
 const UserSchema = z.object({
   name: z.string().min(1).max(255),
+  id: z.string().min(1).max(255),
   email: z.string().email().min(1).max(255),
   password: z.string().min(6).max(255),
 });
@@ -39,7 +42,7 @@ export type State = {
   };
   message?: string | null;
 };
-export async function createUser(_: any, user: UserType) {
+export async function createUser(user: UserType) {
   const validatedFields = CreateUser.safeParse({
     name: user.name,
     email: user.email,
@@ -64,7 +67,7 @@ export async function createUser(_: any, user: UserType) {
     };
   }
 
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword = await generateHashedPassword(password);
 
   try {
     await sql`
@@ -74,12 +77,36 @@ export async function createUser(_: any, user: UserType) {
   } catch (error) {
     return { message: 'Database Error: Failed to Create User.' };
   }
+
+  revalidatePath('/dashboard/user');
+  redirect('/dashboard/user');
 }
-// export async function updateUser(id: string, formData: FormData) {
+
+export async function fetchUser(id: string) {
+  try {
+    const data = await sql<User>`
+      SELECT
+        id,
+        name,
+        email
+      FROM users
+      WHERE id = ${id}
+    `;
+
+    const user = data.rows;
+    return user.at(0);
+  } catch (err) {
+    console.error('Database Error:', err);
+  }
+}
+
+// const UpdateUser = UserSchema.omit({ id: true });
+
+// export async function updateUser(user: UserType) {
 //   const validatedFields = UpdateUser.safeParse({
-//     name: formData.get('name'),
-//     email: formData.get('email'),
-//     password: formData.get('password'),
+//     name: user.name,
+//     email: user.email,
+//     password: user.password,
 //   });
 
 //   if (!validatedFields.success) {
@@ -91,10 +118,12 @@ export async function createUser(_: any, user: UserType) {
 
 //   const { name, email, password } = validatedFields.data;
 
+//   const hashedPassword = await generateHashedPassword(password);
+
 //   try {
 //     await sql`
 //       UPDATE users
-//       SET name = ${name}, email = ${email}, password = ${password}
+//       SET name = ${name}, email = ${email}, password = ${hashedPassword}
 //       WHERE id = ${id}
 //     `;
 //   } catch (error) {

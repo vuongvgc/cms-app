@@ -1,6 +1,8 @@
 'use client';
 
+import { createUser } from '@/app/lib/actions';
 import { UserType } from '@/app/lib/type';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -11,6 +13,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useFormState } from 'react-dom';
 import { DefaultValues, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -21,7 +24,7 @@ const formSchema = z.object({
 });
 
 export type UserFormProps = {
-  onSubmit: (data: UserType) => void;
+  onSubmit: typeof createUser;
   defaultValues?: DefaultValues<UserType>;
   isReadOnly?: boolean;
 };
@@ -38,12 +41,13 @@ const UserForm = ({ onSubmit, defaultValues, isReadOnly }: UserFormProps) => {
     mode: 'onChange',
     defaultValues: defaultValues || userDefaultValues,
   });
+  const [errorMessage, dispatch] = useFormState(onSubmit, undefined);
 
   return (
     <Form {...form}>
       <form
         id='user-form'
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(dispatch)}
         className='space-y-8'
       >
         <FormField
