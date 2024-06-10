@@ -1,4 +1,4 @@
-import { createUser, fetchUser } from '@/app/lib/actions';
+import { fetchUser, updateUser } from '@/app/lib/actions';
 import { UserType } from '@/app/lib/type';
 import Breadcrumbs from '@/app/ui/breadcrumbs';
 import { CardUserForm } from '@/app/ui/users/card-form';
@@ -16,6 +16,8 @@ export default async function Page({ params }: { params: { id: string } }) {
     notFound();
   }
 
+  const updateInvoiceWithId = updateUser.bind(null, id);
+
   return (
     <main>
       <Breadcrumbs
@@ -32,7 +34,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         title='Create User'
         defaultValues={user as UserType}
         description='Fill in the details to create a new user.'
-        onSubmit={createUser}
+        onSubmit={updateInvoiceWithId}
       />
     </main>
   );

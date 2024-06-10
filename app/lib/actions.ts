@@ -91,35 +91,35 @@ export async function fetchUser(id: string) {
   }
 }
 
-// const UpdateUser = UserSchema.omit({ id: true });
+const UpdateUser = UserSchema.omit({ id: true });
 
-// export async function updateUser(user: UserType) {
-//   const validatedFields = UpdateUser.safeParse({
-//     name: user.name,
-//     email: user.email,
-//     password: user.password,
-//   });
+export async function updateUser(id: string, _: any, user: UserType) {
+  const validatedFields = UpdateUser.safeParse({
+    name: user.name,
+    email: user.email,
+    password: user.password,
+  });
 
-//   if (!validatedFields.success) {
-//     return {
-//       errors: validatedFields.error.flatten().fieldErrors,
-//       message: 'Missing Fields. Failed to Update User.',
-//     };
-//   }
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Update User.',
+    };
+  }
 
-//   const { name, email, password } = validatedFields.data;
+  const { name, email, password } = validatedFields.data;
 
-//   const hashedPassword = await generateHashedPassword(password);
+  const hashedPassword = await generateHashedPassword(password);
 
-//   try {
-//     await sql`
-//       UPDATE users
-//       SET name = ${name}, email = ${email}, password = ${hashedPassword}
-//       WHERE id = ${id}
-//     `;
-//   } catch (error) {
-//     return { message: 'Database Error: Failed to Update User.' };
-//   }
-
-//   // Additional logic if needed, like revalidation or redirection
-// }
+  try {
+    await sql`
+      UPDATE users
+      SET name = ${name}, email = ${email}, password = ${hashedPassword}
+      WHERE id = ${id}
+    `;
+  } catch (error) {
+    return { message: 'Database Error: Failed to Update User.' };
+  }
+  revalidatePath('/dashboard/user');
+  redirect('/dashboard/user');
+}

@@ -41,7 +41,7 @@ const UserForm = ({ onSubmit, defaultValues, isReadOnly }: UserFormProps) => {
     mode: 'onChange',
     defaultValues: defaultValues || userDefaultValues,
   });
-  const [errorMessage, dispatch] = useFormState(onSubmit, undefined);
+  const [errorMessage, dispatch] = useFormState(onSubmit, null);
 
   return (
     <Form {...form}>
