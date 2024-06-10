@@ -42,7 +42,7 @@ export type State = {
   };
   message?: string | null;
 };
-export async function createUser(user: UserType) {
+export async function createUser(_: any, user: UserType) {
   const validatedFields = CreateUser.safeParse({
     name: user.name,
     email: user.email,
@@ -57,15 +57,6 @@ export async function createUser(user: UserType) {
   }
 
   const { name, email, password } = validatedFields.data;
-
-  const isValidEmail = await isEmailExits(email);
-
-  if (isValidEmail) {
-    return {
-      errors: 'email',
-      message: 'Email already used',
-    };
-  }
 
   const hashedPassword = await generateHashedPassword(password);
 
